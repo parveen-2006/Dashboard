@@ -11,7 +11,8 @@ export default function App() {
     <div className='App'>
       <Header />
       <Space>
-        <SideMenu></SideMenu><PageContent></PageContent>
+        <SideMenu></SideMenu>
+        <PageContent></PageContent>
       </Space>
       <Footer />
     </div>

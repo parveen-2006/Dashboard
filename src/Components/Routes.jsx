@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function Routes() {
   return (
-    <div>Routes</div>
+    <div className='Routes'>Routes</div>
   )
 }
