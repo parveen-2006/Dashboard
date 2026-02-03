@@ -10,7 +10,7 @@ export default function App() {
   return (
     <div className='App'>
       <Header />
-      <Space>
+      <Space className='SideMenuAndPageContent'>
         <SideMenu></SideMenu>
         <PageContent></PageContent>
       </Space>
