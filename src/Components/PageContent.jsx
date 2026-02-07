@@ -1,7 +1,10 @@
 import React from 'react'
+import Router from './Router'
 
 export default function PageContent() {
   return (
-    <div className='PageContent'>PageContent</div>
+    <div className='PageContent'>
+      <Router/>
+    </div>
   )
 }
