@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { AiTwotoneDollarCircle } from "react-icons/ai";
 import { CiShop, CiShoppingCart } from "react-icons/ci";
 import { LuUserRound } from "react-icons/lu";
-import { getOrders, getRevenue } from "../API/Api";
+import { getCustomers, getInventory, getOrders, getRevenue } from "../API/Api";
 
 import {
   Chart as ChartJS,
@@ -26,6 +26,31 @@ ChartJS.register(
 );
 
 export default function Dashboard() {
+  const [orders, setOrders] = useState(0);
+  const [inventory, setInventory] = useState(0);
+  const [customers, setCustomers] = useState(0);
+  const [revenue, setRevenue] = useState(0);
+
+  useEffect(() => {
+    getOrders().then((res) => {
+      setOrders(res.total);
+      setRevenue(res.discountedTotal)
+    });
+    getInventory().then((res) => {
+      setInventory(res.total);
+      console.log( "MY CODE: ",res.total);
+    });
+    getCustomers().then((res) => {
+      setCustomers(res.total);
+      console.log( "MY CODE: ",res.total);
+    });
+    getRevenue().then((res) => {
+      setRevenue(res.total);
+      console.log( "MY CODE: ",res.total);
+    });
+
+  }, []);
+
   return (
     <Space size={20} orientation="vertical">
       <Typography.Title level={4}>Dashboard</Typography.Title>
@@ -43,7 +68,7 @@ export default function Dashboard() {
             />
           }
           title="Orders"
-          value={12345}
+          value={orders}
         />
         <DashboardCard
           icon={
@@ -58,7 +83,7 @@ export default function Dashboard() {
             />
           }
           title="Inventory"
-          value={12345}
+          value={inventory}
         />
         <DashboardCard
           icon={
@@ -72,8 +97,8 @@ export default function Dashboard() {
               }}
             />
           }
-          title="Customer"
-          value={12345}
+          title="Customers"
+          value={customers}
         />
         <DashboardCard
           icon={
@@ -88,7 +113,7 @@ export default function Dashboard() {
             />
           }
           title="Revenue"
-          value={12345}
+          value={revenue}
         />
       </Space>
       <br />
@@ -191,7 +216,7 @@ function DashboardChart() {
   };
 
   return (
-    <Card style={{width : 500 , height :270}}>
+    <Card style={{ width: 500, height: 270 }}>
       <Bar options={options} data={revenueData} />;
     </Card>
   );

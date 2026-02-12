@@ -15,3 +15,9 @@ export const getInventory = () => {
     .then((res) => res.json())
     .then(console.log);
 };
+
+export const getCustomers = () => {
+  return fetch("https://dummyjson.com/users")
+    .then((res) => res.json())
+    .then(console.log);
+};
