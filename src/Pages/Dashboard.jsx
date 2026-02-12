@@ -140,7 +140,7 @@ function RecentOrders() {
 function DashboardCard({ title, value, icon }) {
   return (
     <Card>
-      <Space direction="horizontal">
+      <Space orientation="horizontal">
         {icon}
         <Statistic title={title} value={value} />
       </Space>
@@ -149,14 +149,31 @@ function DashboardCard({ title, value, icon }) {
 }
 
 function DashboardChart() {
+  const [revenueData, setRevenueData] = useState({
+    labels: [],
+    datasets: [],
+  });
 
   useEffect(() => {
     getRevenue().then((res) => {
-        const labels = res.cart.map(cart=>{
-            return `User-${cart.userId}`
-        })
+      const labels = res.carts.carts.map((cart) => {
+        return `User-${cart.userId}`;
+      });
+      const data = res.carts.carts.map((cart) => {
+        return cart.discountedTotal;
+      });
 
-
+      const dataSource = {
+        labels,
+        datasets: [
+          {
+            label: "Revenue",
+            data: data,
+            backgroundColor: "rgba(255, 0, 0, 1)",
+          },
+        ],
+      };
+      setRevenueData(dataSource);
     });
   }, []);
 
@@ -173,31 +190,9 @@ function DashboardChart() {
     },
   };
 
-  const labels = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-  ];
-
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: labels.map(() => Math.random() * 1000),
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      },
-      {
-        label: "Dataset 2",
-        data: labels.map(() => Math.random() * 1000),
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
-    ],
-  };
-
-  return <Bar options={options} data={data} />;
+  return (
+    <Card style={{width : 500 , height :270}}>
+      <Bar options={options} data={revenueData} />;
+    </Card>
+  );
 }
